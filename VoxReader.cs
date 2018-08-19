@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -15,7 +14,7 @@ namespace CsharpVoxReader
         public VoxReader(string path, IVoxLoader loader)
         {
             if ( ! File.Exists(path)) throw new FileNotFoundException("Can't open vox file : file not found", path);
-            if (loader == null) throw new ArgumentNullException(nameof(loader));
+            if (loader == null) throw new ArgumentNullException("loader"); //changed nameof for direct variable name for Unity compatibility
 
             Path = path;
             Loader = loader;
@@ -33,19 +32,19 @@ namespace CsharpVoxReader
                 char[] magicNumber = br.ReadChars(4);
                 if( ! magicNumber.SequenceEqual("VOX ".ToCharArray()))
                 {
-                    throw new InvalidDataException("Can't read VOX file : invalid vox signature");
+                    throw new IOException("Can't read VOX file : invalid vox signature"); //changed InvalidDataException for IOException for Unity compatibility
                 }
 
                 Int32 version = br.ReadInt32();
                 if(version > FILE_FORMAT_VERSION)
                 {
-                    throw new InvalidDataException($"Can't read VOX file : file format version ({version}) is newer than reader version ({FILE_FORMAT_VERSION})");
+                    throw new IOException("Can't read VOX file : file format version ("+version+") is newer than reader version ("+FILE_FORMAT_VERSION+")"); //changed InvalidDataException for IOException for Unity compatibility
                 }
 
                 string id = Chunk.ReadChunkId(br);
                 if(id != Chunks.Main.ID)
                 {
-                    throw new InvalidDataException($"Can't read VOX file : MAIN chunk expected (was {id}");
+                    throw new IOException("Can't read VOX file : MAIN chunk expected (was "+id+")"); //changed InvalidDataException for IOException for Unity compatibility
                 }
 
                 Chunk main = Chunk.CreateChunk(id);

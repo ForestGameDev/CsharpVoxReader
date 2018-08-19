@@ -23,7 +23,7 @@ namespace CsharpVoxReader.Chunks
 
             string id = Chunk.ReadChunkId(br);
             readSize += 4;
-            if(id != Model.ID) throw new InvalidDataException($"Can't read VOX file : XYZI chunk expected (was {id})");
+            if(id != Model.ID) throw new IOException("Can't read VOX file : XYZI chunk expected (was "+id+")"); //changed InvalidDataException for IOException for Unity compatibility
 
             Model model = Chunk.CreateChunk(id) as Model;
             model.Init(x, y, z);

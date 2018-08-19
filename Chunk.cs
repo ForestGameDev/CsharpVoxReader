@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 
 namespace CsharpVoxReader
 {
@@ -23,7 +22,7 @@ namespace CsharpVoxReader
 
         internal static string ReadChunkId(BinaryReader br)
         {
-            if (br == null) throw new ArgumentNullException(nameof(br));
+            if (br == null) throw new ArgumentNullException("br"); //changed nameof for direct variable name for Unity compatibility
 
             char[] id = br.ReadChars(4);
             return new string(id);
@@ -31,8 +30,8 @@ namespace CsharpVoxReader
 
         internal virtual int Read(BinaryReader br, IVoxLoader loader)
         {
-            if (br == null) throw new ArgumentNullException(nameof(br));
-            if (loader == null) throw new ArgumentNullException(nameof(loader));
+            if (br == null) throw new ArgumentNullException("br"); //changed nameof for direct variable name for Unity compatibility
+            if (loader == null) throw new ArgumentNullException("loader"); //changed nameof for direct variable name for Unity compatibility
 
             _Size = br.ReadInt32();
             _ChildrenSize = br.ReadInt32();

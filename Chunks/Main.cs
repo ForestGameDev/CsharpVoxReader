@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 
 namespace CsharpVoxReader.Chunks
 {
@@ -19,7 +17,7 @@ namespace CsharpVoxReader.Chunks
 
             if(Size > 0)
             {
-                throw new InvalidDataException($"MAIN chunk size is expected to be 0 (was {Size}");
+                throw new IOException("MAIN chunk size is expected to be 0 (was " + Size +")"); //changed InvalidDataException for IOException for Unity compatibility
             }
 
             int childrenReadSize = 0;
